@@ -19,6 +19,5 @@ This will output a two-column table where the first is the name of the column an
 df <- data_frame(id = 1:5, gender = factor(c("M", "F", "M", "M", "F")), race = factor(c("white", "white", "black", "black", "other")))
 categorical_summary(df)
 
-
 }
 
