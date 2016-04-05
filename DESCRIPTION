@@ -8,5 +8,8 @@ Depends:
 License: GPL-3
 LazyData: true
 RoxygenNote: 5.0.1
-Imports: dplyr
+Imports:
+  dplyr,
+  magrittr,
+  tidyr
 Suggests: testthat
