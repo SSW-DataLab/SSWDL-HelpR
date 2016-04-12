@@ -1,8 +1,10 @@
-#' Create a summary table which, for each row, displays the rows name, type, number of unique values, and number and percentage of missing values.
+#' Create a summary table of aberrant values of a data.frame
 #'
-#' @param df the \code{data.frame} to create a summary from
+#' This creates a table of the column names, types, number of unique values, and number and percentage of missing values for each column in the input.
 #'
-#' @return A \code{tbl_df} with one row per column of \code{df} and columns (column, class, n_distinct, n_NA, n_not_NA, pct_NA)
+#' @param df A \code{data.frame} to create a summary from
+#'
+#' @return A \code{tbl_df} with one row per column of \code{df} and columns \code{column}, \code{class}, \code{n_distinct}, \code{n_NA}, \code{n_not_NA}, \code{pct_NA}
 #'
 #' @export
 aberrant_values <- function(df) {
