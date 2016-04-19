@@ -8,7 +8,7 @@
 zelig_prediction_summary <- function(model) {
 
   # argument validation
-  if (!(attributes(class(model))$package == "Zelig")) {
+  if (!grepl("^Zelig", class(model))) {
     stop("model must be a Zelig model")
   }
 
