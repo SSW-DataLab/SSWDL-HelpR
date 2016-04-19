@@ -1,6 +1,11 @@
-#' Extract and combine summary simulation stats from a Zelig models
+#' Extract summary simulation stats from a Zelig model
 #'
-#' @param models
+#' Returns simulation name, condition name, and the following summary stats of their expected values (ev):
+#' lower quantile (2.5\%), mean (NOT median), and upper quantile (97.5\%).
+#'
+#' @param model a Zelig model; class should start with "Zelig"
+#'
+#' @return \code{tbl_df} with one row per simulation-condition pair, and columns \code{simulation}, \code{condition}, \code{lower}, \code{mean}, \code{upper}
 #'
 #' @importFrom magrittr %>%
 #'
