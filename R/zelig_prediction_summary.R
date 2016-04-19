@@ -23,7 +23,7 @@ zelig_prediction_summary <- function(model) {
 
 #### helper functions ####
 
-# usage: summarize_zelig_simulation(z$sim.out$x)
+# usage: summarize_zelig_simulation(z$sim.out$x, "foobar")
 summarize_zelig_simulation <- function(sim, name) {
 
   # get names of different conditions and their expected values
@@ -45,7 +45,9 @@ summarize_zelig_simulation <- function(sim, name) {
 }
 
 
-# usage: summarize_zelig_condition(z$sim.out$x$ev[[1]], rownames(z$sim.out$x)[1])
+# usage:
+#   one condition:   summarize_zelig_condition(z$sim.out$x$ev[[1]])
+#   mult conditions: summarize_zelig_condition(z$sim.out$x$ev[[1]][, 1, ])
 summarize_zelig_condition <- function(x) {
   dplyr::data_frame(
     lower     = quantile(x, 0.025),
