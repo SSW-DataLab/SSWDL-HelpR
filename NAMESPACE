@@ -3,5 +3,5 @@
 export(aberrant_values)
 export(categorical_summary)
 export(table_1)
+export(zelig_prediction_summary)
 import(dplyr)
-importFrom(magrittr,"%>%")
