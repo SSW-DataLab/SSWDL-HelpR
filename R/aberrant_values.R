@@ -17,8 +17,8 @@ aberrant_values <- function(df) {
     column     = colnames(df),
     class      = sapply(df, class),
     n_distinct = sapply(df, dplyr::n_distinct),
-    n_NA       = sapply(df, function(x) sum(is.na(x))),
-    n_not_NA   = sapply(df, function(x) sum(!is.na(x))),
-    pct_NA     = sapply(df, function(x) round(sum(is.na(x)) / nrow(df) * 100, 2))
+    n_na       = sapply(df, function(x) sum(is.na(x))),
+    n_not_na   = sapply(df, function(x) sum(!is.na(x))),
+    pct_na     = sapply(df, function(x) round(sum(is.na(x)) / nrow(df) * 100, 2))
   )
 }
