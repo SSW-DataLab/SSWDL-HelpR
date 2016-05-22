@@ -77,11 +77,7 @@ subtable_factor <- function(x, df, dimension, overall) {
     mutate(percent = paste0(percent, "%"))
 
   # manipulate this table to be in the format we need
-  subtable <- tidyr::gather_(subtable, "colname", "value", c("count", "percent"), factor_key = TRUE)
-  subtable$colname <- paste(magrittr::extract2(subtable, dimension), subtable$colname, sep = "_")  # TODO: convert to mutate_
-  subtable <- subtable %>%
-    select_(.dots = list(x, "colname", "value")) %>%
-    tidyr::spread_("colname", "value")
+  subtable <- subtable %>% format_subtable(dimension, x)
 
   # rename the first column so all tables from this function have the same columns
   names(subtable)[1] <- "variable"
@@ -105,16 +101,23 @@ subtable_numeric <- function(x, df, dimension, overall) {
     mutate_each(funs(as.character))
 
   # manipulate this table to be in the format we need
-  subtable <- tidyr::gather_(subtable, "colname", "value", c("count", "percent"), factor_key = TRUE)
-  subtable$colname <- paste(magrittr::extract2(subtable, dimension), subtable$colname, sep = "_")  # TODO: convert to mutate_
-  subtable <- subtable %>%
-    select_(.dots = list("colname", "value")) %>%
-    tidyr::spread_("colname", "value")
+  subtable <- subtable %>% format_subtable(dimension)
 
   # prepend variable name
   subtable <- subtable %>%
     mutate(variable = x) %>%
     select(variable, everything())
+
+  subtable
+}
+
+
+format_subtable <- function(subtable, dimension, x = NULL) {
+  subtable <- subtable %>% tidyr::gather_("colname", "value", c("count", "percent"), factor_key = TRUE)
+  subtable$colname <- paste(magrittr::extract2(subtable, dimension), subtable$colname, sep = "_")  # TODO: convert to mutate_
+  subtable <- subtable %>%
+    select_(.dots = c(x, "colname", "value") %>% as.list) %>%  # using c first drops x if null
+    tidyr::spread_("colname", "value")
 
   subtable
 }
