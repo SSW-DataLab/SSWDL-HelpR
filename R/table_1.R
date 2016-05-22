@@ -33,20 +33,24 @@ table_1 <- function(df, dimension = NULL, overall = FALSE) {
   if (!(dimension %in% names(df))) stop("dimension must be the name of a column in df")
   if (!is.factor(magrittr::extract2(df, dimension))) stop("dimension must be a factor column")
 
-  # warn about overall not being implemented
-  if (overall) {
-    warning("overall argument currently not implemented; ignoring")
-  }
-
   # run helper function on each non-dimension column and combine
-  table_1 <- df %>%
+  table_one <- df %>%
     names %>%
     setdiff(dimension) %>%  # don't apply to dimension col
     lapply(make_subtable, df, dimension, overall) %>%
     bind_rows %>%
     as.data.frame
 
-  table_1
+  # create an overall column with recursion
+  if (overall) {
+    overall_table <- df %>%
+      mutate_(.dots = setNames(list(~as.factor("overall")), dimension)) %>%
+      table_1(dimension, overall = FALSE)
+
+    table_one <- table_one %>% inner_join(overall_table, by = "variable")
+  }
+
+  table_one
 }
 
 
