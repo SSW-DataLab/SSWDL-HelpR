@@ -104,9 +104,9 @@ subtable_numeric <- function(x, df, dimension, overall) {
 
   subtable <- df %>%
     group_by_(dimension) %>%
-    summarize_(.dots = setNames(list(lazyeval::interp(~round(mean(var)), var = as.name(x)), lazyeval::interp(~round(sd(var)), var = as.name(x))), c("count", "percent"))) %>%
-    ungroup %>%
-    mutate_each(funs(as.character))
+    summarize_(.dots = setNames(lapply(list(~mean(var), ~sd(var)), lazyeval::interp, var = as.name(x)), c("count", "percent"))) %>%
+    mutate_each(funs(round(., 1) %>% format(nsmall = 1)), count, percent)
+    ungroup
 
   # manipulate this table to be in the format we need
   subtable <- subtable %>% format_subtable(dimension)
