@@ -45,9 +45,10 @@ table_1 <- function(df, dimension = NULL, overall = FALSE) {
   if (overall) {
     overall_table <- df %>%
       mutate_(.dots = setNames(list(~as.factor("overall")), dimension)) %>%
-      table_1(dimension, overall = FALSE)
+      table_1(dimension, overall = FALSE) %>%
+      select(-variable)
 
-    table_one <- table_one %>% inner_join(overall_table, by = "variable")
+    table_one <- table_one %>% cbind(overall_table)
   }
 
   table_one
@@ -55,6 +56,7 @@ table_1 <- function(df, dimension = NULL, overall = FALSE) {
 
 
 #### helper functions ####
+
 make_subtable <- function(x, df, dimension, overall) {
   col <- magrittr::extract2(df, x)
 
@@ -69,6 +71,7 @@ make_subtable <- function(x, df, dimension, overall) {
 
   subtable
 }
+
 
 subtable_factor <- function(x, df, dimension, overall) {
   # create table of count/percent values, grouped by dimension and x
@@ -95,6 +98,7 @@ subtable_factor <- function(x, df, dimension, overall) {
 
   subtable
 }
+
 
 subtable_numeric <- function(x, df, dimension, overall) {
 

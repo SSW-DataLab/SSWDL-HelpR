@@ -67,3 +67,17 @@ test_that("table_1 produces expected outputs for different groupings", {
 #     ReadTestOutput("tests/testthat/table_1-service_3.csv")
 #   )
 })
+
+
+#### regressions ####
+
+# https://github.com/SSW-DataLab/sswdlHelpR/pull/11
+new_test <- test_frame %>% mutate(sex2 = sample(sex, n())) %>% select(service_1, sex, sex2)
+test_that("columns with the same factor levels don't cause issues with overall = TRUE", {
+  new_test <- test_frame %>% mutate(sex2 = sample(sex, n())) %>% select(service_1, sex, sex2)
+
+  expect_equal(
+    new_test %>% table_1("service_1")                 %>% nrow,
+    new_test %>% table_1("service_1", overall = TRUE) %>% nrow
+  )
+})
