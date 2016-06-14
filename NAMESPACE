@@ -2,4 +2,6 @@
 
 export(aberrant_values)
 export(categorical_summary)
+export(table_1)
+import(dplyr)
 importFrom(magrittr,"%>%")
