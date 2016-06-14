@@ -2,22 +2,31 @@
 % Please edit documentation in R/table_1.R
 \name{table_1}
 \alias{table_1}
-\title{Create a "table 1" from a data.frame, a common summary table used in publications.}
+\title{Create a "table 1" from a data.frame}
 \usage{
-table_1(df, dimension = NULL, overall = TRUE)
+table_1(df, dimension = NULL, overall = FALSE)
 }
 \arguments{
-\item{df}{the \code{data.frame} to summarize}
+\item{df}{(\code{data.frame}) the data to summarize}
 
-\item{dimension}{the name of a column in \code{df} to use as the dimensions; used to form columns of the output}
+\item{dimension}{(\code{character}) the name of a column in \code{df} to use as the dimensions; used to form columns of the output}
 
-\item{overall}{should an overall column be generated?}
+\item{overall}{(\code{logical}) should a pair of overall columns be generated?}
 }
 \value{
-
+\code{data.frame} with two columns per level of \code{dimension} (and two more if \code{overall=TRUE}) suffixed by "_count"/"_percent", one row for each numeric column of \code{df}, and one row for each level of each non-\code{dimension} factor column of \code{df}, preceded by the name of that factor column.
 }
 \description{
-This will not return a ready-to-publish table, but does most of the hard work.
-It should be straightforward to fix up the table returned by this function.
+Given a factor variable to group on (\code{dimension}), this will summarize the other variables terms of that one, and optionally include overall columns with summaries that ignore the dimension groupings. This will not return a ready-to-publish table, but does most of the hard work (the grouped computations).
+}
+\details{
+For each level of \code{dimension}, the output will return a count and percentage for each level of other factor variabls, or a mean and standard deviation for the numeric variables.
+All columns are of type \code{character} to preserve formatting.
+}
+\examples{
+table_1(simulated_social_services, "service_1")
+table_1(simulated_social_services, "service_1", overall = TRUE)
+table_1(simulated_social_services, "service_2")
+
 }
 
