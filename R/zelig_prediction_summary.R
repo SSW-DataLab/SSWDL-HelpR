@@ -1,11 +1,17 @@
-#' Extract summary simulation stats from a Zelig model
+#' Extract summary stats from a simulated Zelig model
 #'
-#' Returns simulation name, condition name, and the following summary stats of their expected values (ev):
-#' lower quantile (2.5\%), mean (NOT median), and upper quantile (97.5\%).
+#' Returns simulation name, condition name, and the lower quantile (2.5\%), mean (NOT median), and upper quantile (97.5\%) of each simulation-condition pair's expected values (\code{ev}).
 #'
-#' @param model a Zelig model; class should start with "Zelig"
+#' @param model (\code{Zelig}) a simulated model from the Zelig package with one or more conditions
 #'
 #' @return \code{tbl_df} with one row per simulation-condition pair, and columns \code{simulation}, \code{condition}, \code{lower}, \code{mean}, \code{upper}
+#'
+#' @examples
+#' z <- zls$new()
+#' z$zelig(Fertility ~ Education, data = swiss)
+#' z$setx(Education = 5)
+#' z$sim()
+#' zelig_prediction_summary(z)
 #'
 #' @importFrom magrittr %>%
 #'
