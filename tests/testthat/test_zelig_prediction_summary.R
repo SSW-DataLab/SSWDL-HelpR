@@ -1,6 +1,5 @@
 library(sswdlHelpR)
 library(Zelig)
-library(dplyr)
 
 context("Zelig Prediction Summary")
 

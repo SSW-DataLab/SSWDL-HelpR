@@ -6,6 +6,8 @@
 #'
 #' @return A \code{tbl_df} with one row per column of \code{df} and columns \code{column}, \code{class}, \code{n_distinct}, \code{n_NA}, \code{n_not_NA}, \code{pct_NA}
 #'
+#' @import dplyr
+#'
 #' @export
 aberrant_values <- function(df) {
 
@@ -13,10 +15,10 @@ aberrant_values <- function(df) {
   if (!is.data.frame(df)) stop("df must be a data.frame")
 
   # construct a tbl_df of the desired outputs
-  dplyr::data_frame(
+  data_frame(
     column     = colnames(df),
     class      = sapply(df, class),
-    n_distinct = sapply(df, dplyr::n_distinct),
+    n_distinct = sapply(df, n_distinct),
     n_na       = sapply(df, function(x) sum(is.na(x))),
     n_not_na   = sapply(df, function(x) sum(!is.na(x))),
     pct_na     = sapply(df, function(x) round(sum(is.na(x)) / nrow(df) * 100, 2))

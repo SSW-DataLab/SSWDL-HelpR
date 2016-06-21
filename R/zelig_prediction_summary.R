@@ -13,7 +13,7 @@
 #' z$sim()
 #' zelig_prediction_summary(z)
 #'
-#' @importFrom magrittr %>%
+#' @import dplyr
 #'
 #' @export
 zelig_prediction_summary <- function(model) {
@@ -28,7 +28,7 @@ zelig_prediction_summary <- function(model) {
   sim_names <- names(sims)
 
   # get per-simulation tbl_df's & combine
-  Map(summarize_zelig_simulation, sims, sim_names) %>% dplyr::bind_rows()
+  Map(summarize_zelig_simulation, sims, sim_names) %>% bind_rows()
 }
 
 
@@ -51,8 +51,8 @@ summarize_zelig_simulation <- function(sim, name) {
 
   # combine results and prepend condition names
   results %>%
-    dplyr::bind_rows() %>%
-    dplyr::bind_cols(dplyr::data_frame(simulation = rep(name, length(results)), condition = conditions), .)
+    bind_rows() %>%
+    bind_cols(data_frame(simulation = rep(name, length(results)), condition = conditions), .)
 }
 
 
@@ -60,7 +60,7 @@ summarize_zelig_simulation <- function(sim, name) {
 #   one condition:   summarize_zelig_condition(z$sim.out$x$ev[[1]])
 #   mult conditions: summarize_zelig_condition(z$sim.out$x$ev[[1]][, 1, ])
 summarize_zelig_condition <- function(x) {
-  dplyr::data_frame(
+  data_frame(
     lower     = quantile(x, 0.025),
     mean      = mean(x),
     upper     = quantile(x, 0.975)

@@ -1,4 +1,3 @@
-library(dplyr)
 library(readr)
 context("table_1")
 

@@ -10,7 +10,7 @@
 #' df <- data_frame(id = 1:5, gender = factor(c("M", "F", "M", "M", "F")), race = factor(c("white", "white", "black", "black", "other")))
 #' categorical_summary(df)
 #'
-#' @importFrom magrittr %>%
+#' @import dplyr
 #'
 #' @export
 categorical_summary <- function(df) {
@@ -25,11 +25,11 @@ categorical_summary <- function(df) {
     which %>%
     names %>%
     lapply(function(x) {
-      dplyr::data_frame(
+      data_frame(
         variable = as.character(x),
         levels   = as.character(levels(df[[x]]))
       )
     }) %>%
-    dplyr::bind_rows()
+    bind_rows()
 
 }
