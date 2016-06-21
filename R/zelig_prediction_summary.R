@@ -13,7 +13,7 @@
 zelig_prediction_summary <- function(model) {
 
   # argument validation
-  if (!grepl("^Zelig", class(model))) {
+  if (!inherits(model, "Zelig")) {
     stop("model must be a Zelig model")
   }
 
