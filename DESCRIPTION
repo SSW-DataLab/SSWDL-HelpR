@@ -2,7 +2,7 @@ Package: sswdlHelpR
 Title: Helper functions for the UM-SSW DataLab
 Version: 0.0.0.9000
 Authors@R: person("Clayton", "Yochum", email = "claytonjy@gmail.com", role = c("aut", "cre"))
-Description: Functions to help with analyses in the UM-SSW DataLab
+Description: This package provides functions to help with analyses in the UM-SSW DataLab.
 Depends:
     R (>= 3.2.0)
 License: GPL-3
@@ -11,5 +11,8 @@ RoxygenNote: 5.0.1
 Imports:
   dplyr,
   magrittr,
-  tidyr
-Suggests: testthat
+  tidyr,
+  lazyeval
+Suggests:
+  Zelig,
+  testthat

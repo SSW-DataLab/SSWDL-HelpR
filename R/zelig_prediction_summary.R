@@ -7,6 +7,7 @@
 #' @return \code{tbl_df} with one row per simulation-condition pair, and columns \code{simulation}, \code{condition}, \code{lower}, \code{mean}, \code{upper}
 #'
 #' @examples
+#' library(Zelig)
 #' z <- zls$new()
 #' z$zelig(Fertility ~ Education, data = swiss)
 #' z$setx(Education = 5)
@@ -14,6 +15,7 @@
 #' zelig_prediction_summary(z)
 #'
 #' @import dplyr
+#' @importFrom stats quantile
 #'
 #' @export
 zelig_prediction_summary <- function(model) {

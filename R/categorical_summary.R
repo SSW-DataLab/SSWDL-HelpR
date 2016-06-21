@@ -7,7 +7,11 @@
 #' @return A \code{tbl_df} with two columns, \code{variable} and \code{levels}. The \code{variable} column contains the name of each categorical column, repeated for each level it had, in the same order as in \code{df}. The \code{levels} column contains each level for the associated \code{variable}.
 #'
 #' @examples
-#' df <- data_frame(id = 1:5, gender = factor(c("M", "F", "M", "M", "F")), race = factor(c("white", "white", "black", "black", "other")))
+#' df <- data.frame(
+#'   id = 1:5,
+#'   gender = factor(c("M", "F", "M", "M", "F")),
+#'   race = factor(c("white", "white", "black", "black", "other"))
+#' )
 #' categorical_summary(df)
 #'
 #' @import dplyr

@@ -16,7 +16,11 @@ A \code{tbl_df} with two columns, \code{variable} and \code{levels}. The \code{v
 This will output a two-column table where the first is the name of the column and the second is the name of that column's levels.
 }
 \examples{
-df <- data_frame(id = 1:5, gender = factor(c("M", "F", "M", "M", "F")), race = factor(c("white", "white", "black", "black", "other")))
+df <- data.frame(
+  id = 1:5,
+  gender = factor(c("M", "F", "M", "M", "F")),
+  race = factor(c("white", "white", "black", "black", "other"))
+)
 categorical_summary(df)
 
 }

@@ -17,6 +17,7 @@
 #' table_1(simulated_social_services, "service_2")
 #'
 #' @import dplyr
+#' @importFrom stats setNames
 #'
 #' @export
 table_1 <- function(df, dimension = NULL, overall = FALSE) {

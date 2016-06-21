@@ -16,6 +16,7 @@ zelig_prediction_summary(model)
 Returns simulation name, condition name, and the lower quantile (2.5\%), mean (NOT median), and upper quantile (97.5\%) of each simulation-condition pair's expected values (\code{ev}).
 }
 \examples{
+library(Zelig)
 z <- zls$new()
 z$zelig(Fertility ~ Education, data = swiss)
 z$setx(Education = 5)
