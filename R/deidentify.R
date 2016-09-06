@@ -1,38 +1,50 @@
-library(dplyr)
-
-# Deidentifies a single data frame.
-#
-# This function removes sensitive columns from the dataset and creates a masked,
-# non-sensitive version of ID columns.
-#
-# Args:
-#   df: (data.frame) data to be deidentified; must contain columns to be masked and dropped
-#   mask: (character) columns to be masked
-#   drop: (character) columns to be removed
-#
-# Returns:
-#   (data.frame) deidentied version of df
+#' Deidentify a single data frame.
+#'
+#' This removes sensitive columns from a dataset and masks ID columns by mapping levels to integers.
+#'
+#' @param df (\code{data.frame}) the dataset to deidentify
+#' @param mask (\code{character}) names of columns in \code{df} to mask
+#' @param drop (\code{character}) names of columns in \code{df} to drop
+#'
+#' @return \code{data.frame} \code{df} with drop columns removed and mask columns replaced
+#'
+#' @examples
+#' deidentify(mtcars, mask = c("mpg", "cyl"), drop = c("vs", "am"))
+#'
+#' @export
 deidentify <- function(df, mask = NULL, drop = NULL) {
 
-  # warning messages
-  if(is.null(mask) && is.null(drop)) {
-    stop("No columns to mask/drop.")
+  # validate df
+  if (!is.data.frame(df)) stop("df must be a data.frame")
+
+  # ensure there's something to do
+  if (is.null(mask) & is.null(drop)) {
+    stop("no columns to mask/drop.")
   }
 
-  if(!all(mask %in% names(df)) || !all(drop %in% names(df))) {
-    stop("Data frame must contain columns to mask/drop.")
+  # validate mask
+  if (!is.null(mask)) {
+    if (!is.character(mask)) stop("mask must be a character vector")
+    if (any(!(mask %in% names(df)))) stop("all columns in mask must be in df")
   }
 
-  # make new ID column
-  for(column in mask) {
-    df[column] <- group_indices_(df, .dots = column)
+  # validate drop
+  if (!is.null(drop)) {
+    if (!is.character(drop)) stop("drop must be a character vector")
+    if (any(!(drop %in% names(df)))) stop("all columns in drop must be in df")
   }
 
-  # identify columns to keep
-  keep_cols <- setdiff(names(df), drop)
+  # mask ID columns
+  if (!is.null(mask)) {
+    for (column in mask) {
+      df[column] <- group_indices_(df, .dots = column)
+    }
+  }
 
-  # remove senstive columns and make new id column first column
-  df <- select_(df, .dots = keep_cols)
+  # remove drop columns
+  if (!is.null(drop)) {
+    df <- dplyr::select_(df, .dots = setdiff(names(df), drop))
+  }
 
   df
 }
